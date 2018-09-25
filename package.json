@@ -1,0 +1,13 @@
+{
+  "name": "tailwind-css-variables",
+  "version": "0.0.1",
+  "description": "Tailwind plugin to generate css vars '--color-name' for colors list.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:n1kk/tailwind-color-vars.git"
+  },
+  "scripts": {},
+  "author": "Omar Khatib",
+  "license": "MIT"
+}
