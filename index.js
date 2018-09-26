@@ -29,7 +29,7 @@ module.exports = function(customVariableName) {
     };
     let rootArray = {};
     Object.keys(varModules).forEach(key => {
-      if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens']) || (varModules[key] && modules[key])) {
+      if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens']) || varModules[key]) {
         const keyValue = config(key, []);
         const names = Object.keys(keyValue);
         const modulePrefix = varModules[key];
