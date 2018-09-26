@@ -37,7 +37,8 @@ module.exports = function(customVariableName) {
           const varName = `-${prefix !== '' ? '-' + prefix : ''}${modulePrefix !== '' ? '-' + modulePrefix : ''}${
             name !== 'default' ? '-' + name : ''
           }`;
-          rootArray[varName] = keyValue[name];
+          const value = typeof keyValue[name] === 'string' ? keyValue[name] : keyValue[name].toString();
+          rootArray[varName] = value;
         });
       }
     });
