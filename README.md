@@ -1,4 +1,4 @@
-# Tailwind Css variables
+# Tailwind CSS variables
 
 > Transform Tailwind config file to CSS variables.
 
