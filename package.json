@@ -1,13 +1,16 @@
 {
   "name": "tailwind-css-variables",
-  "version": "1.1.0",
+  "version": "1.1.1",
+  "author": "Omar Khatib",
+  "license": "MIT",
   "description": "Transform Tailwind config file to CSS variables.",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:n1kk/tailwind-color-vars.git"
+  "bugs": {
+    "url": "https://github.com/omarkhatibco/tailwind-css-variables/issues"
   },
-  "scripts": {},
-  "author": "Omar Khatib",
-  "license": "MIT"
+  "homepage": "https://github.com/omarkhatibco/tailwind-css-variables#readme",
+  "keywords": [
+    "tailwindcss",
+    "css variables"
+  ]
 }
