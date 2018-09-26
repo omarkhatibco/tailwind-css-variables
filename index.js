@@ -1,4 +1,4 @@
-module.exports = function(customVariableName) {
+module.exports = function(customVariableName, opts) {
   return ({ addComponents, e, config }) => {
     const modules = config('modules', []);
     const { prefix } = config('options', []);
@@ -27,12 +27,25 @@ module.exports = function(customVariableName) {
       opacity: 'opacity',
       ...customVariableName
     };
+    const options = {
+      postcssEachVariables: false,
+      ...opts
+    };
     let rootArray = {};
     Object.keys(varModules).forEach(key => {
-      if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens']) || varModules[key]) {
+      if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens'] !== false) || varModules[key]) {
         const keyValue = config(key, []);
         const names = Object.keys(keyValue);
         const modulePrefix = varModules[key];
+
+        if (options.postcssEachVariables) {
+          const selectedKey = ['colors', 'screens', 'fonts', 'textSizes'];
+          if (selectedKey.includes(key)) {
+            const varName = `-${prefix !== '' ? '-' + prefix : ''}${key !== '' ? '-' + key : ''}`;
+            rootArray[varName] = names.toString();
+          }
+        }
+
         names.forEach(name => {
           const varName = `-${prefix !== '' ? '-' + prefix : ''}${modulePrefix !== '' ? '-' + modulePrefix : ''}${
             name !== 'default' ? '-' + name : ''

@@ -18,9 +18,14 @@ npm install --save-dev tailwind-css-variables
 The css variables plugin exposes options for you to use. Here is the example for adding it to your project plugins
 
 ```js
-require('tailwind-css-variables')({
-  // settings
-});
+require('tailwind-css-variables')(
+  {
+    // modules
+  },
+  {
+    // options
+  }
+);
 ```
 
 ## Settings
@@ -72,6 +77,82 @@ You can easily disable module by give it a value of `false`
 ```js
 {
   opacity: false,
+}
+```
+
+## Options
+
+```js
+{
+  postcssEachVariables: true; // default: false
+}
+```
+
+### postcssEachVariables
+
+this option will let the plugin generate a css variables as array of colors,screens,fonts and text sizes as this example
+
+```css
+:root {
+  --colors: transparent, black, grey-darkest, grey-darker, grey-dark;
+  --screens: sm, md, lg;
+  --fonts: sans, serif, mono;
+  --text-sizes: xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl;
+}
+```
+
+this will allow you to use `postcss-each` plugin to loop colors and generate button with background color for example
+
+#### looping
+
+Let's assume you would like to generate button from you colors.
+
+first of all install this postcss plugins
+
+```bash
+# Install via npm
+npm install --save-dev postcss-each postcss-at-rules-variables
+```
+
+add the plugins to you postcss config file and respect the order.
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: './tailwind-config.js',
+    'postcss-at-rules-variables': {},
+    'postcss-each': {}
+  }
+};
+```
+
+now in you css file start looping you color for Example
+
+```css
+@each $key in var(--colors) {
+  .btn-$key {
+    color: var(--color-$(key));
+  }
+}
+```
+
+this will output this css file
+
+```css
+.btn-transparent {
+  background-color: var(--color-transparent);
+}
+
+.btn-black {
+  background-color: var(--color-black);
+}
+
+.btn-grey {
+  background-color: var(--color-grey);
+}
+
+.btn-white {
+  background-color: var(--color-white);
 }
 ```
 
