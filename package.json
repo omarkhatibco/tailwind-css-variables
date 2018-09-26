@@ -1,7 +1,7 @@
 {
   "name": "tailwind-css-variables",
-  "version": "0.0.1",
-  "description": "Tailwind plugin to generate css vars '--color-name' for colors list.",
+  "version": "1.0.0",
+  "description": "Transform Tailwind config file to CSS variables.",
   "main": "index.js",
   "repository": {
     "type": "git",
