@@ -78,6 +78,7 @@ You can easily disable module by give it a value of `false`
 ## Output & Name pattern
 
 generated css variables are in this pattern `--{prefix}{variable name}{size|type|color}`
+
 for Example generated border width will be `--{}{border}{0}` and default value will be `--border`.
 
 The result of this plugin is a `:root` with CSS variables.
