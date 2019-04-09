@@ -15,17 +15,23 @@ npm install --save-dev tailwind-css-variables
 
 ## Configure
 
-The css variables plugin exposes options for you to use. Here is the example for adding it to your project plugins
+The css variables plugin exposes options for you to use. Here is the example for adding it to your project tailwind plugins.
+
+In `tailwind.js` or `tailwind.config.js` search for plugins section and add this lines.
+
+By defauts, you don't need any configurations.
 
 ```js
-require('tailwind-css-variables')(
-  {
-    // modules
-  },
-  {
-    // options
-  }
-);
+plugins: {
+  require('tailwind-css-variables')(
+    {
+      // modules
+    },
+    {
+      // options
+    }
+  );
+}
 ```
 
 ## Settings
