@@ -43,15 +43,15 @@ where object key is the `module` and object value is the `variable name`
 
 ```js
 {
-  colors: 'color',
+ colors: 'color',
   screens: '',
-  fonts: 'font',
-  textSizes: 'text',
-  fontWeights: 'font',
-  leading: 'leading',
-  tracking: 'tracking',
+  fontFamily: 'font',
+  fontSize: 'text',
+  fontWeight: 'font',
+  lineHeight: 'leading',
+  letterSpacing: 'tracking',
   backgroundSize: 'bg',
-  borderWidths: 'border',
+  borderWidth: 'border',
   borderRadius: 'rounded',
   width: 'w',
   height: 'h',
@@ -61,8 +61,7 @@ where object key is the `module` and object value is the `variable name`
   maxHeight: 'max-h',
   padding: 'p',
   margin: 'm',
-  negativeMargin: 'nm',
-  shadows: 'shadows',
+  boxShadow: 'shadows',
   zIndex: 'z',
   opacity: 'opacity',
 }
@@ -166,7 +165,7 @@ this will output this css file
 
 ## Output & Name pattern
 
-generated css variables are in this pattern `--{prefix}{variable name}{size|type|color}`
+generated css variables are in this pattern `--{variable name}{size|type|color}`
 
 for Example generated border width will be `--{}{border}{0}` and default value will be `--border`.
 
