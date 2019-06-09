@@ -5,6 +5,7 @@
 [![npm](https://img.shields.io/npm/v/tailwind-css-variables.svg)](https://www.npmjs.com/package/tailwind-css-variables)
 
 :warning: **This version is working only with Tailwind v1 and above, if you still using the old version of tailwind please use version v1.2.0.**
+:warning: **If you want to upgrade to this version please read changelog to know what has changed.**
 
 ## Installation
 
