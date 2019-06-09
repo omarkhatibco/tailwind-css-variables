@@ -1,17 +1,15 @@
 module.exports = function(customVariableName, opts) {
-  return ({ addComponents, e, config }) => {
-    const modules = config('modules', []);
-    const { prefix } = config('options', []);
+  return ({ addComponents, config }) => {
     const varModules = {
       colors: 'color',
       screens: '',
-      fonts: 'font',
-      textSizes: 'text',
-      fontWeights: 'font',
-      leading: 'leading',
-      tracking: 'tracking',
+      fontFamily: 'font',
+      fontSize: 'text',
+      fontWeight: 'font',
+      lineHeight: 'leading',
+      letterSpacing: 'tracking',
       backgroundSize: 'bg',
-      borderWidths: 'border',
+      borderWidth: 'border',
       borderRadius: 'rounded',
       width: 'w',
       height: 'h',
@@ -21,8 +19,7 @@ module.exports = function(customVariableName, opts) {
       maxHeight: 'max-h',
       padding: 'p',
       margin: 'm',
-      negativeMargin: 'nm',
-      shadows: 'shadows',
+      boxShadow: 'shadows',
       zIndex: 'z',
       opacity: 'opacity',
       ...customVariableName
@@ -34,24 +31,56 @@ module.exports = function(customVariableName, opts) {
     let rootArray = {};
     Object.keys(varModules).forEach(key => {
       if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens'] !== false) || varModules[key]) {
-        const keyValue = config(key, []);
+        const keyValue = config(`theme.${key}`, []);
         const names = Object.keys(keyValue);
         const modulePrefix = varModules[key];
 
         if (options.postcssEachVariables) {
-          const selectedKey = ['colors', 'screens', 'fonts', 'textSizes'];
+          const selectedKey = ['colors', 'screens', 'fontFamily', 'fontSize'];
           if (selectedKey.includes(key)) {
-            const varName = `-${prefix !== '' ? '-' + prefix : ''}${key !== '' ? '-' + key : ''}`;
-            rootArray[varName] = names.toString();
+            if (key=== 'colors') {
+              const colorsArr = [];
+
+              names.forEach(colorName=> {
+               const colorObj = keyValue[colorName];
+               if (isObject(colorObj)) {
+                Object.keys(colorObj).forEach(level=>{
+                  const fullColorName= `${colorName}-${level}`;
+                  colorsArr.push(fullColorName);
+                });
+               } else {
+                colorsArr.push(colorName);
+               }
+              })
+              const varName = `--${key !== '' ? key : ''}`;
+              rootArray[varName] = colorsArr.toString();
+            } else {
+              const varName = `--${key !== '' ? key : ''}`;
+              rootArray[varName] = names.toString();
+            }
+
           }
         }
 
         names.forEach(name => {
-          const varName = `-${prefix !== '' ? '-' + prefix : ''}${modulePrefix !== '' ? '-' + modulePrefix : ''}${
-            name !== 'default' ? '-' + name : ''
-          }`;
-          const value = typeof keyValue[name] === 'string' ? keyValue[name] : keyValue[name].toString();
-          rootArray[varName] = value;
+          let varName, value;
+          if (key=== 'colors' && isObject(keyValue[name])) {
+            colorObj = keyValue[name];
+            Object.keys(colorObj).forEach(key=>{
+              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key !== 'default' ? key : ''}`;
+              value = typeof keyValue[name][key] === 'string' ? keyValue[name][key] : keyValue[name][key].toString();
+              rootArray[varName] = value;
+            });
+
+          } else {
+            varName = `-${key !== 'screens' ? '-': ''}${modulePrefix !== '' ? modulePrefix : ''}${
+              name !== 'default' ? '-' + name.replace('/','-') : ''
+            }`;
+            value = typeof keyValue[name] === 'string' ? keyValue[name] : keyValue[name].toString();
+            rootArray[varName] = value;
+          }
+
+
         });
       }
     });
@@ -60,4 +89,8 @@ module.exports = function(customVariableName, opts) {
     };
     addComponents(root);
   };
+};
+
+var isObject = (obj) =>{
+	return Object.prototype.toString.call(obj) === '[object Object]';
 };

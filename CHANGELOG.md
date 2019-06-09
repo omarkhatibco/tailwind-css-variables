@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2019-06-10
+
+### added
+- add note to readme that this version is compatible with tailwind v1
+
+### Fixed
+- nogative margin now in this form `--m--4`, I should look at this later.
+- the problem with slashes `/` seems it's not accepted anymore in css Variables so class like `w-1/3` now is `--w-1-3`
+
+### removed
+- nigative margin as it's now in the same margin object.
+- disable prefix because it mades eveything complicated.
+
 ## [1.2.0] - 2018-09-26
 
 ### added
