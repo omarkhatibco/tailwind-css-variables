@@ -1,6 +1,6 @@
 {
   "name": "tailwind-css-variables",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Omar Khatib",
   "license": "MIT",
   "description": "Transform Tailwind config file to CSS variables.",
