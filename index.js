@@ -67,7 +67,7 @@ module.exports = function(customVariableName, opts) {
           if (key=== 'colors' && isObject(keyValue[name])) {
             colorObj = keyValue[name];
             Object.keys(colorObj).forEach(key=>{
-              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key !== 'default' ? key : ''}`;
+              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key}`.replace(/-default$/, '');
               value = typeof keyValue[name][key] === 'string' ? keyValue[name][key] : keyValue[name][key].toString();
               rootArray[varName] = value;
             });
