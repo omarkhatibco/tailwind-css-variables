@@ -5,16 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2019-06-12 [prelease]
+## [2.0.2] - 2019-06-13
 
 ### added
+
+### Fixed
+
+- remove extra dash sign from default color(#3) @Knovour
+
+### removed
+
+## [2.0.1] - 2019-06-13
+
+### added
+
+### Fixed
+
+- fix version.
+
+### removed
+
+## [2.0.0] - 2019-06-12
+
+### added
+
 - add note to readme that this version is compatible with tailwind v1 only,
 
 ### Fixed
+
 - negative margin now in this form `--m--4`, I should look at this later.
 - the problem with slashes `/` seems it's not accepted anymore in css Variables so class like `w-1/3` now is `--w-1-3`
 
 ### removed
+
 - negative margin as it's now in the same margin object.
 - prefix because it complicated.
 
