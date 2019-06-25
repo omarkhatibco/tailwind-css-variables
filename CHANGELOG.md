@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- remove extra dash sign from default color[#3](https://github.com/omarkhatibco/tailwind-css-variables/pull/3) [@Knovour](https://github.com/Knovour)
+- remove extra dash sign from default color [#3](https://github.com/omarkhatibco/tailwind-css-variables/pull/3) [@Knovour](https://github.com/Knovour)
 
 ### removed
 
