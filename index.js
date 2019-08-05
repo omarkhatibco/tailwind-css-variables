@@ -72,6 +72,13 @@ module.exports = function(customVariableName, opts) {
               rootArray[varName] = value;
             });
 
+          } else if (key === 'screens' && isObject(keyValue[name])) {
+            const minWEntries = Object.entries(keyValue[name]).filter(e => e[0] === 'min')
+
+            minWEntries.forEach(([_, screenValue]) => {
+              varName = `-${modulePrefix !== '' ? modulePrefix : ''}${name !== 'default' ? '-' + name.replace('/','-') : ''}`;
+              rootArray[varName] = screenValue.toString();
+            })
           } else {
             varName = `-${key !== 'screens' ? '-': ''}${modulePrefix !== '' ? modulePrefix : ''}${
               name !== 'default' ? '-' + name.replace('/','-') : ''
