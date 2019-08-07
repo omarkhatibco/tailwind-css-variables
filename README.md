@@ -26,7 +26,7 @@ In `tailwind.js` or `tailwind.config.js` search for plugins section and add this
 By defauts, you don't need any configurations.
 
 ```js
-plugins: {
+plugins: [
   require('tailwind-css-variables')(
     {
       // modules
@@ -35,7 +35,7 @@ plugins: {
       // options
     }
   );
-}
+]
 ```
 
 ## Settings
