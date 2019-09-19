@@ -8,6 +8,9 @@
   "bugs": {
     "url": "https://github.com/omarkhatibco/tailwind-css-variables/issues"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@omarkhatibco"
+  },
   "homepage": "https://github.com/omarkhatibco/tailwind-css-variables#readme",
   "keywords": [
     "tailwindcss",
