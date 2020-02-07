@@ -2,7 +2,9 @@
 
 > Transform Tailwind config file to CSS variables.
 
-[![npm](https://img.shields.io/npm/v/tailwind-css-variables.svg)](https://www.npmjs.com/package/tailwind-css-variables)
+[![npm](https://img.shields.io/npm/v/tailwind-css-variables.svg?style=for-the-badge)](https://www.npmjs.com/package/tailwind-css-variables)
+[![Downloads](https://img.shields.io/npm/dt/tailwind-css-variables.svg?style=for-the-badge)](https://www.npmjs.com/package/tailwind-css-variables)
+[![License](https://img.shields.io/npm/l/tailwind-css-variables.svg?style=for-the-badge)](https://es.wikipedia.org/wiki/Licencia_MIT)
 
 :warning: **This version is working only with Tailwind v1 and above, if you still using the old version of tailwind please use version v1.2.0.**
 
@@ -128,9 +130,9 @@ add the plugins to you postcss config file and respect the order.
 ```js
 module.exports = {
   plugins: {
-    tailwindcss: './tailwind-config.js',
-    'postcss-at-rules-variables': {},
-    'postcss-each': {}
+    tailwindcss: "./tailwind-config.js",
+    "postcss-at-rules-variables": {},
+    "postcss-each": {}
   }
 };
 ```
