@@ -8,7 +8,7 @@
 
 :warning: **This version is working only with Tailwind v1 and above, if you still using the old version of tailwind please use version v1.2.0.**
 
-:warning: **If you want to upgrade to this version please read changelog to know what has changed.**
+:warning: **If you want to upgrade to this version please read the changelog to know what has changed.**
 
 ## Installation
 
@@ -21,11 +21,11 @@ npm install --save-dev tailwind-css-variables
 
 ## Configure
 
-The css variables plugin exposes options for you to use. Here is the example for adding it to your project tailwind plugins.
+The CSS variables plugin exposes options for you to use. Here is an example for adding it to your projects Tailwind plugins.
 
-In `tailwind.js` or `tailwind.config.js` search for plugins section and add this lines.
+In `tailwind.js` or `tailwind.config.js` search for the plugins section and add these lines.
 
-By defauts, you don't need any configurations.
+By default, you don't need any configuration.
 
 ```js
 plugins: [
@@ -42,7 +42,7 @@ plugins: [
 
 ## Settings
 
-By default this is the current settings
+By default, this is the current setting
 where object key is the `module` and object value is the `variable name`
 
 ```js
@@ -73,7 +73,7 @@ where object key is the `module` and object value is the `variable name`
 
 ### add Module
 
-You can easily add module by add it to setting and specify a `variable name`
+You can easily add the module by adding it to settings and specify a `variable name`
 
 ```js
 {
@@ -83,7 +83,7 @@ You can easily add module by add it to setting and specify a `variable name`
 
 ### Disable Module
 
-You can easily disable module by give it a value of `false`
+You can easily disable the module by giving it a value of `false`
 
 ```js
 {
@@ -101,7 +101,7 @@ You can easily disable module by give it a value of `false`
 
 ### postcssEachVariables
 
-this option will let the plugin generate a css variables as array of colors,screens,fonts and text sizes as this example
+this option will let the plugin generate CSS variables as an array of colors, screens, fonts and text sizes as this example
 
 ```css
 :root {
@@ -112,20 +112,20 @@ this option will let the plugin generate a css variables as array of colors,scre
 }
 ```
 
-this will allow you to use `postcss-each` plugin to loop colors and generate button with background color for example
+this will allow you to use `postcss-each` plugin to loop colors and generate a button with background color for example
 
 #### looping
 
-Let's assume you would like to generate button from you colors.
+Let's assume you would like to generate buttons from your colors.
 
-first of all install this postcss plugins
+first of all, install this postcss plugin
 
 ```bash
 # Install via npm
 npm install --save-dev postcss-each postcss-at-rules-variables
 ```
 
-add the plugins to you postcss config file and respect the order.
+add the plugins to your postcss config file and respect the order.
 
 ```js
 module.exports = {
@@ -137,7 +137,7 @@ module.exports = {
 };
 ```
 
-now in you css file start looping you color for Example
+now in your CSS file start looping you color for Example
 
 ```css
 @each $key in var(--colors) {
@@ -147,7 +147,7 @@ now in you css file start looping you color for Example
 }
 ```
 
-this will output this css file
+this will output this CSS file
 
 ```css
 .btn-transparent {
@@ -171,7 +171,7 @@ this will output this css file
 
 generated css variables are in this pattern `--{variable name}{size|type|color}`
 
-for Example generated border width will be `--{}{border}{0}` and default value will be `--border`.
+for Example, generated border width will be `--{}{border}{0}` and the default value will be `--border`.
 
 The result of this plugin is a `:root` with CSS variables.
 
