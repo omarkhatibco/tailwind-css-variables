@@ -95,7 +95,7 @@ module.exports = function(customVariableName, opts) {
       ':root': rootArray
     };
 
-    if (options.outputToFile) {
+    if (options.outputToFile && options.outputFilePath) {
       const cssVariables = Object.entries(rootArray);
       let outputString = ":root {\n";
       cssVariables.forEach((variable) => outputString += `\t${variable[0]}: ${variable[1]};\n`);
