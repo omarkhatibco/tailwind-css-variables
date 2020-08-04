@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = function(customVariableName, opts) {
   return ({ addComponents, config }) => {
     const varModules = {
