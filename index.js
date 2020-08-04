@@ -105,7 +105,7 @@ module.exports = function(customVariableName, opts) {
 
       fs.writeFile(options.outputFilePath, outputString, (err) => {
         if (err) throw err;
-        console.log('Created file: ./dist/css/variables.css');
+        console.log(`Created file: ${options.outputFilePath}`);
       });
     } else {
       addComponents(root);
