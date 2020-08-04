@@ -94,7 +94,20 @@ module.exports = function(customVariableName, opts) {
     let root = {
       ':root': rootArray
     };
-    addComponents(root);
+
+    if (options.outputToFile) {
+      const cssVariables = Object.entries(rootArray);
+      let outputString = ":root {\n";
+      cssVariables.forEach((variable) => outputString += `\t${variable[0]}: ${variable[1]};\n`);
+      outputString += "}\n";
+
+      fs.writeFile(options.outputFilePath, outputString, (err) => {
+        if (err) throw err;
+        console.log('Created file: ./dist/css/variables.css');
+      });
+    } else {
+      addComponents(root);
+    }
   };
 };
 
