@@ -95,9 +95,17 @@ You can easily disable the module by giving it a value of `false`
 
 ```js
 {
+  outputToFile: true; // default: false
+  outputFilePath: './path/to/file.css'; // default: null
   postcssEachVariables: true; // default: false
 }
 ```
+
+### outputToFile
+This option can be set to `true` if you want to extract the `:root {}` variables into a separate file so that they are not apart of the tailwind.css output.
+
+### outputFilePath
+This option is the relative path to the file you wish to write to. By specifiying the path eg. `./dist/css/variables.css`, the plugin will create that file and populate it with the `:root {}` variables.
 
 ### postcssEachVariables
 

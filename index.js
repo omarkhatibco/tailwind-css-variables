@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = function(customVariableName, opts) {
   return ({ addComponents, config }) => {
     const varModules = {
@@ -94,7 +96,20 @@ module.exports = function(customVariableName, opts) {
     let root = {
       ':root': rootArray
     };
-    addComponents(root);
+
+    if (options.outputToFile && options.outputFilePath) {
+      const cssVariables = Object.entries(rootArray);
+      let outputString = ":root {\n";
+      cssVariables.forEach((variable) => outputString += `\t${variable[0]}: ${variable[1]};\n`);
+      outputString += "}\n";
+
+      fs.writeFile(options.outputFilePath, outputString, (err) => {
+        if (err) throw err;
+        console.log(`Created file: ${options.outputFilePath}`);
+      });
+    } else {
+      addComponents(root);
+    }
   };
 };
 
