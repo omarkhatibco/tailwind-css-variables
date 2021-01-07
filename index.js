@@ -67,7 +67,7 @@ module.exports = function(customVariableName, opts) {
           if (key=== 'colors' && isObject(keyValue[name])) {
             colorObj = keyValue[name];
             Object.keys(colorObj).forEach(key=>{
-              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key}`.replace(/-default$/, '');
+              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key}`.replace(/-default$/i, '');
               value = typeof keyValue[name][key] === 'string' ? keyValue[name][key] : keyValue[name][key].toString();
               rootArray[varName] = value;
             });
@@ -76,12 +76,23 @@ module.exports = function(customVariableName, opts) {
             const minWEntries = Object.entries(keyValue[name]).filter(e => e[0] === 'min')
 
             minWEntries.forEach(([_, screenValue]) => {
-              varName = `-${modulePrefix !== '' ? modulePrefix : ''}${name !== 'default' ? '-' + name.replace('/','-') : ''}`;
+              varName = `-${modulePrefix !== '' ? modulePrefix : ''}${!isDefault(name) ? '-' + name.replace('/','-') : ''}`;
               rootArray[varName] = screenValue.toString();
             })
+          } else if (key === 'fontSize' && Array.isArray(keyValue[name]) && keyValue[name].length == 2) {
+            const addItem = (name, value) => {
+              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}`;
+              rootArray[varName] = value;
+            }
+
+            addItem(name, keyValue[name][0]); // Add "default key"
+            Object.entries(keyValue[name][1]).forEach(([subName, subValue]) => {
+              addItem(`${name}-${subName}`, subValue);
+            })
+
           } else {
             varName = `-${key !== 'screens' ? '-': ''}${modulePrefix !== '' ? modulePrefix : ''}${
-              name !== 'default' ? '-' + name.replace('/','-') : ''
+              !isDefault(name) ? '-' + name.replace('/','-') : ''
             }`;
             value = typeof keyValue[name] === 'string' ? keyValue[name] : keyValue[name].toString();
             rootArray[varName] = value;
@@ -101,3 +112,5 @@ module.exports = function(customVariableName, opts) {
 var isObject = (obj) =>{
 	return Object.prototype.toString.call(obj) === '[object Object]';
 };
+
+var isDefault = (name) => name !== 'default' || name !== 'DEFAULT';
