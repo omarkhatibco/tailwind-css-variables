@@ -6,9 +6,7 @@
 [![Downloads](https://img.shields.io/npm/dt/tailwind-css-variables.svg?style=for-the-badge)](https://www.npmjs.com/package/tailwind-css-variables)
 [![License](https://img.shields.io/npm/l/tailwind-css-variables.svg?style=for-the-badge)](https://es.wikipedia.org/wiki/Licencia_MIT)
 
-:warning: **This version is working only with Tailwind v1 and above, if you still using the old version of tailwind please use version v1.2.0.**
-
-:warning: **If you want to upgrade to this version please read the changelog to know what has changed.**
+:warning: **This version is working only with Tailwind v2 and above, if you still using the old version of tailwind please use version v2.0.0.**
 
 ## Installation
 
@@ -47,8 +45,8 @@ where object key is the `module` and object value is the `variable name`
 
 ```js
 {
- colors: 'color',
-  screens: '',
+  colors: 'color',
+  screens: 'screen',
   fontFamily: 'font',
   fontSize: 'text',
   fontWeight: 'font',
@@ -132,8 +130,8 @@ module.exports = {
   plugins: {
     tailwindcss: "./tailwind-config.js",
     "postcss-at-rules-variables": {},
-    "postcss-each": {}
-  }
+    "postcss-each": {},
+  },
 };
 ```
 
@@ -171,7 +169,9 @@ this will output this CSS file
 
 generated css variables are in this pattern `--{variable name}{size|type|color}`
 
-for Example, generated border width will be `--{}{border}{0}` and the default value will be `--border`.
+for Example, generated border width will be `--{}{border}-{2}` and the default value will be `--border-default`.
+
+Values like `w-0.5` which have comma are not allowed in css variables therefore they are going to be `--w-0_5`.
 
 The result of this plugin is a `:root` with CSS variables.
 

@@ -1,116 +1,154 @@
-module.exports = function(customVariableName, opts) {
+var _ = require("lodash");
+var flattenColorPalette = require("tailwindcss/lib/util/flattenColorPalette")
+  .default;
+
+const defaultVariablesNames = {
+  colors: "color",
+  screens: "screen",
+  fontFamily: "font",
+  fontSize: "text",
+  fontWeight: "font",
+  lineHeight: "leading",
+  letterSpacing: "tracking",
+  backgroundSize: "bg",
+  borderWidth: "border",
+  borderRadius: "rounded",
+  width: "w",
+  height: "h",
+  minWidth: "min-w",
+  minHeight: "min-h",
+  maxWidth: "max-w",
+  maxHeight: "max-h",
+  padding: "p",
+  margin: "m",
+  boxShadow: "shadows",
+  zIndex: "z",
+  opacity: "opacity",
+};
+
+const defaultOptions = {
+  postcssEachVariables: false,
+};
+
+module.exports = function (customVariablesNames, customOptions) {
   return ({ addComponents, config }) => {
-    const varModules = {
-      colors: 'color',
-      screens: '',
-      fontFamily: 'font',
-      fontSize: 'text',
-      fontWeight: 'font',
-      lineHeight: 'leading',
-      letterSpacing: 'tracking',
-      backgroundSize: 'bg',
-      borderWidth: 'border',
-      borderRadius: 'rounded',
-      width: 'w',
-      height: 'h',
-      minWidth: 'min-w',
-      minHeight: 'min-h',
-      maxWidth: 'max-w',
-      maxHeight: 'max-h',
-      padding: 'p',
-      margin: 'm',
-      boxShadow: 'shadows',
-      zIndex: 'z',
-      opacity: 'opacity',
-      ...customVariableName
+    const variableRoot = {};
+    const variablesNames = {
+      ...defaultVariablesNames,
+      ...customVariablesNames,
     };
+
     const options = {
-      postcssEachVariables: false,
-      ...opts
+      ...defaultOptions,
+      ...customOptions,
     };
-    let rootArray = {};
-    Object.keys(varModules).forEach(key => {
-      if ((key === 'colors' && varModules['colors']) || (key === 'screens' && varModules['screens'] !== false) || varModules[key]) {
-        const keyValue = config(`theme.${key}`, []);
-        const names = Object.keys(keyValue);
-        const modulePrefix = varModules[key];
 
-        if (options.postcssEachVariables) {
-          const selectedKey = ['colors', 'screens', 'fontFamily', 'fontSize'];
-          if (selectedKey.includes(key)) {
-            if (key=== 'colors') {
-              const colorsArr = [];
+    Object.entries(variablesNames).forEach(([key, customName]) => {
+      console.log(key);
+      const tailwindPrefix = config("prefix", "");
+      const originalConfig = config(`theme.${key}`, []);
+      console.log(tailwindPrefix);
+      let modifiedConfig = {};
 
-              names.forEach(colorName=> {
-               const colorObj = keyValue[colorName];
-               if (isObject(colorObj)) {
-                Object.keys(colorObj).forEach(level=>{
-                  const fullColorName= `${colorName}-${level}`;
-                  colorsArr.push(fullColorName);
-                });
-               } else {
-                colorsArr.push(colorName);
-               }
-              })
-              const varName = `--${key !== '' ? key : ''}`;
-              rootArray[varName] = colorsArr.toString();
-            } else {
-              const varName = `--${key !== '' ? key : ''}`;
-              rootArray[varName] = names.toString();
-            }
+      switch (key) {
+        case "colors":
+          modifiedConfig = flattenColorPalette(originalConfig);
+          break;
+        case "fontFamily":
+          modifiedConfig = flattenFontFamily(originalConfig);
+          break;
+        case "fontSize":
+          modifiedConfig = flattenFontSize(originalConfig);
+          break;
 
-          }
+        default:
+          modifiedConfig = originalConfig;
+          break;
+      }
+
+      Object.entries(modifiedConfig).forEach(([key, value]) => {
+        const cssVariableName = `--${tailwindPrefix}${customName}-${getFixedKey(
+          key
+        )}`;
+        variableRoot[cssVariableName] = value;
+      });
+
+      if (options.postcssEachVariables) {
+        const postcssEachVariablesKeys = [
+          "colors",
+          "screens",
+          "fontFamily",
+          "fontSize",
+        ];
+        if (postcssEachVariablesKeys.includes(key)) {
+          const cssVariableName = `--${tailwindPrefix}${postCssForEachKeys[key]}`;
+          variableRoot[cssVariableName] = normalizePostcssEachVariablesValues(
+            modifiedConfig
+          );
         }
-
-        names.forEach(name => {
-          let varName, value;
-          if (key=== 'colors' && isObject(keyValue[name])) {
-            colorObj = keyValue[name];
-            Object.keys(colorObj).forEach(key=>{
-              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}-${key}`.replace(/-default$/i, '');
-              value = typeof keyValue[name][key] === 'string' ? keyValue[name][key] : keyValue[name][key].toString();
-              rootArray[varName] = value;
-            });
-
-          } else if (key === 'screens' && isObject(keyValue[name])) {
-            const minWEntries = Object.entries(keyValue[name]).filter(e => e[0] === 'min')
-
-            minWEntries.forEach(([_, screenValue]) => {
-              varName = `-${modulePrefix !== '' ? modulePrefix : ''}${!isDefault(name) ? '-' + name.replace('/','-') : ''}`;
-              rootArray[varName] = screenValue.toString();
-            })
-          } else if (key === 'fontSize' && Array.isArray(keyValue[name]) && keyValue[name].length == 2) {
-            const addItem = (name, value) => {
-              varName = `--${modulePrefix !== '' ? modulePrefix : ''}-${name}`;
-              rootArray[varName] = value;
-            }
-
-            addItem(name, keyValue[name][0]); // Add "default key"
-            Object.entries(keyValue[name][1]).forEach(([subName, subValue]) => {
-              addItem(`${name}-${subName}`, subValue);
-            })
-
-          } else {
-            varName = `-${key !== 'screens' ? '-': ''}${modulePrefix !== '' ? modulePrefix : ''}${
-              !isDefault(name) ? '-' + name.replace('/','-') : ''
-            }`;
-            value = typeof keyValue[name] === 'string' ? keyValue[name] : keyValue[name].toString();
-            rootArray[varName] = value;
-          }
-
-
-        });
       }
     });
-    let root = {
-      ':root': rootArray
+
+    const root = {
+      ":root": variableRoot,
     };
     addComponents(root);
   };
 };
 
-var isObject = (obj) =>{
-	return Object.prototype.toString.call(obj) === '[object Object]';
+const flattenFontFamily = (obj) => {
+  return Object.entries(obj).reduce((prevObj, [key, value]) => {
+    return {
+      ...prevObj,
+      [key]: value.join(","),
+    };
+  }, {});
 };
 
-var isDefault = (name) => name !== 'default' || name !== 'DEFAULT';
+const flattenFontSize = (obj) => {
+  return Object.entries(obj).reduce((prevObj, [key, value]) => {
+    const [fontSize, options] = Array.isArray(value) ? value : [value];
+    const { lineHeight, letterSpacing } = _.isPlainObject(options)
+      ? options
+      : {
+          lineHeight: options,
+        };
+
+    return {
+      ...prevObj,
+      [key]: fontSize,
+      ...(lineHeight === undefined
+        ? {}
+        : {
+            [`${key}-line-height`]: lineHeight,
+          }),
+      ...(letterSpacing === undefined
+        ? {}
+        : {
+            [`${key}-letter-spacing`]: letterSpacing,
+          }),
+    };
+  }, {});
+};
+
+const getFixedKey = (key) => {
+  if (key === "DEFAULT" || key === "default") {
+    return "default";
+  }
+  return key.replace("/", "-").replace(".", "_");
+};
+
+const postCssForEachKeys = {
+  colors: "colors",
+  screens: "screens",
+  fontFamily: "font-families",
+  fontSize: "font-sizes",
+};
+
+const normalizePostcssEachVariablesValues = (obj) => {
+  return Object.keys(obj)
+    .filter(
+      (key) => !(key.includes("letter-spacing") || key.includes("line-height"))
+    )
+    .join(",");
+};
