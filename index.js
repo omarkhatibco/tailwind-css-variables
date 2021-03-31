@@ -44,10 +44,9 @@ module.exports = function (customVariablesNames, customOptions) {
     };
 
     Object.entries(variablesNames).forEach(([key, customName]) => {
-      console.log(key);
       const tailwindPrefix = config("prefix", "");
       const originalConfig = config(`theme.${key}`, []);
-      console.log(tailwindPrefix);
+
       let modifiedConfig = {};
 
       switch (key) {
