@@ -44,6 +44,7 @@ module.exports = function (customVariablesNames, customOptions) {
     };
 
     Object.entries(variablesNames).forEach(([key, customName]) => {
+      if (!customName) return;
       const tailwindPrefix = config("prefix", "");
       const originalConfig = config(`theme.${key}`, []);
 

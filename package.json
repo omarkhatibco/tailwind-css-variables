@@ -1,15 +1,12 @@
 {
-  "name": "@omarkhatibco/tailwind-css-variables",
-  "version": "3.0.0",
+  "name": "tailwind-css-variables",
+  "version": "3.0.1",
   "author": "Omar Khatib",
   "license": "MIT",
   "description": "Transform Tailwind config file to CSS variables.",
   "main": "index.js",
   "bugs": {
     "url": "https://github.com/omarkhatibco/tailwind-css-variables/issues"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "homepage": "https://github.com/omarkhatibco/tailwind-css-variables#readme",
   "keywords": [
