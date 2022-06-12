@@ -100,7 +100,7 @@ const flattenFontFamily = (obj) => {
   return Object.entries(obj).reduce((prevObj, [key, value]) => {
     return {
       ...prevObj,
-      [key]: value.join(","),
+      [key]: typeof value === 'string' ? value : value.join(","),
     };
   }, {});
 };
